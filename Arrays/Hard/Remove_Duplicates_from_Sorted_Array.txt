@@ -1,0 +1,28 @@
+26. Remove_Duplicates_from_Sorted_Array
+Difficulty: Hard
+Here's an explanation of the provided C++ solution:
+
+### 1. Problem Understanding
+The goal is to find two vertical lines, from a given set of non-negative integers representing line heights, that together with the x-axis form a container which can hold the most water. The container cannot be slanted, meaning its area is determined by the shorter of the two selected lines and the distance between them.
+
+### 2. Approach
+The solution uses a two-pointer technique. We start with one pointer at the leftmost line and another at the rightmost line. At each step, we calculate the area formed by these two lines. To try and find a larger area, we then move the pointer pointing to the *shorter* of the two lines inwards. This is because moving the taller line would guarantee a decrease in width while still being limited by the same short height, whereas moving the shorter line offers a chance to encounter a taller line that could potentially increase the container's height, even with a reduced width.
+
+### 3. Algorithm Steps
+*   Initialize a left pointer (`lp`) at the beginning of the `height` array and a right pointer (`rp`) at its end.
+*   Initialize a variable `maxWater` to store the maximum area found so far, starting at zero.
+*   Continue iterating as long as the left pointer is to the left of the right pointer (`lp < rp`):
+    *   Calculate the `width` of the current container as the distance between `rp` and `lp`.
+    *   Determine the effective `ht` (height) of the container by taking the minimum of the heights at `height[lp]` and `height[rp]`.
+    *   Calculate the `currWater` (current area) as `width * ht`.
+    *   Update `maxWater` if `currWater` is greater than the current `maxWater`.
+    *   Move the pointer associated with the shorter line inwards: if `height[lp]` is less than `height[rp]`, increment `lp`; otherwise, decrement `rp`.
+*   Once `lp` and `rp` meet or cross, the loop terminates, and `maxWater` holds the maximum possible area.
+
+### 4. Time Complexity
+**O(n)**
+The two pointers start at opposite ends and move towards each other, traversing the array elements at most once. This makes the operation linear with respect to the number of lines (`n`).
+
+### 5. Space Complexity
+**O(1)**
+The solution only uses a few constant-space variables for pointers, width, height calculations, and storing the maximum area. No additional data structures are created that scale with the input size.
