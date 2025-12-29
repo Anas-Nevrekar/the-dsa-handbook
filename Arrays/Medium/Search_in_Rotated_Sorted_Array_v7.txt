@@ -1,0 +1,29 @@
+33. Search_in_Rotated_Sorted_Array
+Difficulty: Medium
+Here's an explanation of the provided C++ solution:
+
+### 1. Problem Understanding
+The goal is to find two lines within a given set of vertical lines that, when connected by the x-axis, form a container capable of holding the maximum amount of water. The height of the container is limited by the shorter of the two lines, and its width is the distance between them.
+
+### 2. Approach
+The solution uses a two-pointer technique. We start with pointers at the extreme ends of the line array, maximizing the initial width. We calculate the area for this configuration. To find a potentially larger area, we need to try to increase the container's height. Since the current area is limited by the *shorter* of the two lines, moving the pointer of the *shorter* line inwards offers the best chance of encountering a taller line that could increase the container's height. Moving the pointer of the *taller* line would only reduce the width without necessarily improving the height, making it a less optimal move. We repeat this process, narrowing the width, until the pointers meet.
+
+### 3. Algorithm Steps
+*   Initialize a left pointer `lp` at the beginning of the `height` array and a right pointer `rp` at the end.
+*   Initialize `maxWater` to zero to store the largest area found so far.
+*   While the left pointer is less than the right pointer:
+    *   Calculate `width` as the distance between `rp` and `lp`.
+    *   Determine `ht` (effective height) as the minimum of the heights at `height[lp]` and `height[rp]`.
+    *   Calculate `currWater` (current area) by multiplying `width` and `ht`.
+    *   Update `maxWater` if `currWater` is greater than the current `maxWater`.
+    *   If the height at `lp` is less than the height at `rp`, increment `lp` (move the left pointer inward).
+    *   Otherwise (if `height[rp]` is less than or equal to `height[lp]`), decrement `rp` (move the right pointer inward).
+*   Return the final `maxWater`.
+
+### 4. Time Complexity
+O(N)
+Justification: The two pointers start at opposite ends and move towards each other, traversing the array elements at most once. Each step involves constant time operations.
+
+### 5. Space Complexity
+O(1)
+Justification: The solution uses a fixed number of variables (`lp`, `rp`, `maxWater`, etc.) regardless of the input array's size, requiring constant additional space.
