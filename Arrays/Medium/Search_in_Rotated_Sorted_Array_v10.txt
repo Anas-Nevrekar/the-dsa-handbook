@@ -1,0 +1,28 @@
+33. Search_in_Rotated_Sorted_Array
+Difficulty: Medium
+Okay, let's walk through this C++ solution.
+
+### 1. Problem Understanding
+The goal is to find two vertical lines, represented by their heights, that can hold the most water when combined with the x-axis. The container cannot be slanted, meaning the water level is determined by the shorter of the two lines chosen, and the width is simply the distance between those lines. We need to maximize the area formed by these two lines.
+
+### 2. Approach
+The solution uses a two-pointer technique. We start by placing one pointer at the very left end and another at the very right end of the array of heights. This represents the widest possible container. We calculate the water it can hold. Then, in each step, we decide which pointer to move inwards. Since the width will always decrease when we move a pointer, the only way to potentially get a larger area is by increasing the *height* of the container. The height is limited by the *shorter* of the two lines. Therefore, to have a chance at increasing the height, we must move the pointer associated with the shorter line. Moving the pointer for the taller line would guarantee a decrease in width and no improvement in the limiting height, thus never leading to a larger area. By moving the shorter pointer, we explore if a taller line exists further inwards that could create a larger container.
+
+### 3. Algorithm Steps
+*   Initialize a `lp` (left pointer) to the beginning of the `height` array (index 0).
+*   Initialize a `rp` (right pointer) to the end of the `height` array (last index).
+*   Initialize `maxWater` to 0 to keep track of the largest area found so far.
+*   While `lp` is less than `rp` (meaning the pointers haven't crossed):
+    *   Calculate the `width` between the current `lp` and `rp`.
+    *   Determine the `ht` (height) of the container, which is the minimum of the heights at `height[lp]` and `height[rp]`.
+    *   Calculate the `currWater` (current area) as `width * ht`.
+    *   Update `maxWater` if `currWater` is greater than the current `maxWater`.
+    *   If the height at `lp` is less than the height at `rp`, increment `lp` to try and find a potentially taller line on the left.
+    *   Otherwise (if `height[rp]` is less than or equal to `height[lp]`), decrement `rp` to try and find a potentially taller line on the right.
+*   Once `lp` meets or crosses `rp`, the loop terminates, and `maxWater` holds the maximum area found.
+
+### 4. Time Complexity
+**O(n)**. The two pointers start at opposite ends and move towards each other, traversing the array elements at most once. This results in a single pass through the array.
+
+### 5. Space Complexity
+**O(1)**. The solution uses a fixed number of variables (`lp`, `rp`, `maxWater`, `width`, `ht`, `currWater`) regardless of the input array size. No additional data structures are allocated based on the input length.
