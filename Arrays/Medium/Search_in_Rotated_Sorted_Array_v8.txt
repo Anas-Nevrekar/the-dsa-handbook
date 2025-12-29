@@ -1,0 +1,27 @@
+33. Search_in_Rotated_Sorted_Array
+Difficulty: Medium
+Okay, let's break down this code.
+
+### 1. Problem Understanding
+We are given an array representing the heights of vertical lines. Each line has a width of 1. We need to find two of these lines that, together with the x-axis, can form a container that holds the maximum possible amount of water. The capacity of a container formed by two lines is determined by the distance between them (its width) and the height of the shorter of the two lines (its effective height).
+
+### 2. Approach
+The solution uses a two-pointer technique. We start with two pointers, one at the leftmost line and one at the rightmost line. We calculate the water capacity these two lines can hold. The key insight is that to potentially find a larger capacity, we should always move the pointer that points to the *shorter* of the two current lines inward. If we were to move the taller line's pointer, the width would decrease, and the effective height (limited by the shorter line) would either stay the same or decrease, thus never increasing the total area. By moving the shorter line's pointer, we might find a taller line that could increase the effective height, potentially leading to a larger area despite the reduced width.
+
+### 3. Algorithm Steps
+*   Initialize a `lp` (left pointer) to the beginning of the `height` array and `rp` (right pointer) to its end.
+*   Initialize `maxWater` to zero to keep track of the largest capacity found so far.
+*   Loop as long as the left pointer is to the left of the right pointer (`lp < rp`):
+    *   Calculate the current `width` between `rp` and `lp`.
+    *   Determine the effective `ht` (height), which is the minimum of the heights at `lp` and `rp`.
+    *   Calculate `currWater`, the capacity of the current container, by multiplying `width` and `ht`.
+    *   Update `maxWater` if `currWater` is greater than the current `maxWater`.
+    *   If the line at `lp` is shorter than the line at `rp`, increment `lp` (move it one step to the right).
+    *   Otherwise (if the line at `rp` is shorter or equal), decrement `rp` (move it one step to the left).
+*   Once the pointers meet or cross, the loop terminates, and `maxWater` holds the final result.
+
+### 4. Time Complexity
+O(N). The two pointers traverse the array from opposite ends inwards, effectively making a single pass over the elements. Each step involves constant time operations.
+
+### 5. Space Complexity
+O(1). The solution uses a fixed number of variables (`lp`, `rp`, `maxWater`, etc.) regardless of the input array size, so it requires constant additional space.
