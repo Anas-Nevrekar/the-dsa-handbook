@@ -1,0 +1,29 @@
+33. Search_in_Rotated_Sorted_Array
+Difficulty: Medium
+Here's an explanation of the provided C++ solution:
+
+### 1. Problem Understanding
+The goal is to find two vertical lines, represented by their heights, that can hold the most water when paired together with the x-axis forming the base of a container. The container cannot be slanted, meaning its height is limited by the shorter of the two lines chosen, and its width is the distance between them. We need to maximize this contained water.
+
+### 2. Approach
+The code uses a two-pointer approach. It starts by considering the container formed by the outermost lines (maximum possible width). Then, it iteratively narrows down the search. In each step, it calculates the water that can be held by the current pair of lines. To potentially find a larger area, it always moves the pointer associated with the *shorter* line inward. This is because moving the shorter line offers a chance to find a taller line, which could compensate for the reduced width. Moving the taller line inward would only reduce the width and the container height would still be limited by the *other* (shorter) line, making it less likely to find a larger area.
+
+### 3. Algorithm Steps
+*   Initialize a left pointer (`lp`) at the beginning of the `height` list and a right pointer (`rp`) at its end.
+*   Initialize a variable `maxWater` to zero to store the maximum area found so far.
+*   Loop as long as the left pointer is to the left of the right pointer:
+    *   Calculate the `width` of the current container as the distance between `rp` and `lp`.
+    *   Determine the effective `ht` (height) of the container by taking the minimum of the heights at `lp` and `rp`.
+    *   Calculate `currWater`, the amount of water the current container can hold (`width * ht`).
+    *   Update `maxWater` if `currWater` is greater than the current `maxWater`.
+    *   If the line at `lp` is shorter than the line at `rp`, increment `lp` (move the left pointer inward).
+    *   Otherwise (if the line at `rp` is shorter or they are equal), decrement `rp` (move the right pointer inward).
+*   Once the pointers meet, return the final `maxWater` value.
+
+### 4. Time Complexity
+**O(N)**
+The two pointers start at opposite ends and move towards each other, making at most N steps in total, where N is the number of lines. Each step involves a constant number of operations.
+
+### 5. Space Complexity
+**O(1)**
+The solution uses only a few variables (`lp`, `rp`, `maxWater`, etc.) to store pointers and results, requiring a constant amount of extra space regardless of the input size.
