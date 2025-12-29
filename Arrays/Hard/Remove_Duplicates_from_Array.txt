@@ -1,0 +1,27 @@
+26. Remove_Duplicates_from_Array
+Difficulty: Hard
+Here's an explanation of the C++ solution:
+
+### 1. Problem Understanding
+This code aims to find the maximum amount of water that can be contained between any two vertical lines in a given array of heights. Imagine these heights as walls. The "container" formed by two walls will have a width equal to the distance between them, and its height will be limited by the shorter of the two walls. The goal is to maximize this `width * height` product.
+
+### 2. Approach
+The solution uses a "two-pointer" approach. We start with two pointers, one at the very beginning and one at the very end of the `height` array. This represents the widest possible container. We calculate the water it can hold. Then, in each step, we move the pointer associated with the *shorter* wall inwards. The reasoning is that to potentially find a larger area, we need to try and increase the limiting height. Moving the taller wall inwards definitely reduces the width and won't increase the height (as the shorter wall remains the bottleneck). Moving the shorter wall, while reducing width, *might* encounter a taller wall that could create a larger container. This greedy strategy allows us to explore potential larger areas efficiently.
+
+### 3. Algorithm Steps
+*   Initialize a left pointer at the start of the `height` array and a right pointer at the end.
+*   Keep track of the maximum water found so far.
+*   While the left pointer is to the left of the right pointer:
+    *   Calculate the current width between the two pointers.
+    *   Determine the effective height of the container, which is the minimum of the heights at the left and right pointers.
+    *   Calculate the water this current container can hold (width * effective height).
+    *   Update the maximum water if the current container holds more.
+    *   If the wall at the left pointer is shorter than the wall at the right pointer, move the left pointer one step to the right.
+    *   Otherwise (if the right wall is shorter or equal), move the right pointer one step to the left.
+*   Once the pointers meet or cross, return the maximum water found.
+
+### 4. Time Complexity
+The time complexity is O(N). This is because in the worst case, the two pointers will traverse the entire array once. Each step of the loop involves a constant number of operations.
+
+### 5. Space Complexity
+The space complexity is O(1). The solution only uses a few fixed-size variables to store pointers and the maximum water amount, regardless of the input array's size.
