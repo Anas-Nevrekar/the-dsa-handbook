@@ -1,0 +1,27 @@
+33. Search_in_Rotated_Sorted_Array
+Difficulty: Medium
+Here's an explanation of the provided C++ solution:
+
+### 1. Problem Understanding
+The goal is to find two vertical lines, from a given set of lines (each represented by its height), that can form a container with the largest possible area when combined with the x-axis. The width of this container is the distance between the two lines, and its height is limited by the shorter of the two lines.
+
+### 2. Approach
+The solution uses a two-pointer technique. We start with two pointers: one at the very beginning of the array (leftmost line) and one at the very end (rightmost line). This configuration provides the maximum possible width. In each step, we calculate the area these two lines can hold. To potentially find a larger area, we need to adjust our pointers. Since the area is limited by the shorter line, moving the pointer of the shorter line inward might allow us to find a taller line, which could lead to a larger container area despite the reduction in width. Moving the taller line's pointer would only decrease the width and keep the height the same or decrease it, making it less likely to find a larger container.
+
+### 3. Algorithm Steps
+* Initialize a left pointer (`lp`) to the first element and a right pointer (`rp`) to the last element of the `height` array.
+* Initialize a variable `maxWater` to zero to keep track of the maximum area found.
+* While the left pointer is to the left of the right pointer:
+    * Calculate the current `width` as the distance between `rp` and `lp`.
+    * Determine the effective `ht` for the container, which is the minimum of the heights at `lp` and `rp`.
+    * Calculate the `currWater` (current area) as `width * ht`.
+    * Update `maxWater` if `currWater` is greater than the current `maxWater`.
+    * If the line at `lp` is shorter than the line at `rp`, increment `lp` to try finding a taller left line.
+    * Otherwise (if the line at `rp` is shorter or equal), decrement `rp` to try finding a taller right line.
+* Once the pointers meet or cross, return the `maxWater`.
+
+### 4. Time Complexity
+**O(N)**. The two pointers start at opposite ends of the array and move towards each other, performing a constant amount of work in each step. This means they traverse the array elements at most once.
+
+### 5. Space Complexity
+**O(1)**. The solution uses a fixed number of variables (`lp`, `rp`, `maxWater`, `width`, `ht`, `currWater`) regardless of the input array's size. No additional data structures are allocated based on input size.
