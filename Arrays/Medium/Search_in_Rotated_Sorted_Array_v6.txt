@@ -1,0 +1,27 @@
+33. Search_in_Rotated_Sorted_Array
+Difficulty: Medium
+Here's an explanation of the provided C++ solution.
+
+### 1. Problem Understanding
+The goal is to find the maximum amount of water that can be contained between two vertical lines. We're given an array where each element represents the height of a line. The container is formed by two lines and the x-axis. The height of the container is limited by the shorter of the two chosen lines, and its width is the distance between them. We need to pick the two lines that maximize this volume.
+
+### 2. Approach
+The solution uses a two-pointer technique. We start with two pointers, one at the very left and one at the very right of the array. This configuration gives us the maximum possible width. We calculate the water held by this container. Then, to find a potentially larger container, we need to decide which pointer to move. Since the height of the container is determined by the *shorter* of the two lines, moving the *shorter* line inwards might allow us to find a taller line, which could lead to a larger container even with reduced width. Moving the *taller* line would guarantee a reduction in width and, at best, keep the same height (if the new line is as tall as the previous shorter line), thus never improving the area. This strategy efficiently explores potential containers.
+
+### 3. Algorithm Steps
+*   Initialize a `left` pointer to the start of the `height` array and a `right` pointer to its end.
+*   Initialize a `maxWater` variable to 0 to store the largest area found.
+*   Loop as long as the `left` pointer is less than the `right` pointer:
+    *   Calculate the current `width` as the distance between the `right` and `left` pointers.
+    *   Determine the `ht` (height) of the container, which is the minimum of the heights at the `left` and `right` pointers.
+    *   Calculate the `currWater` (current area) as `width * ht`.
+    *   Update `maxWater` if `currWater` is greater.
+    *   If the line at the `left` pointer is shorter than the line at the `right` pointer, increment the `left` pointer.
+    *   Otherwise (if the right line is shorter or they are equal), decrement the `right` pointer.
+*   After the loop finishes, `maxWater` will hold the maximum water that can be contained.
+
+### 4. Time Complexity
+O(N). The two pointers start at opposite ends and move towards each other, traversing the array at most once. Each step involves a constant number of operations.
+
+### 5. Space Complexity
+O(1). The solution uses only a few variables to store pointers and the maximum water, regardless of the input array size.
