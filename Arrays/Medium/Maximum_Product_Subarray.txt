@@ -1,0 +1,30 @@
+152. Maximum_Product_Subarray
+Difficulty: Medium
+1. Problem Understanding
+a. The goal is to find the largest product of a continuous sequence of numbers within a given array.
+b. This sequence, called a subarray, must contain at least one number.
+c. Numbers in the array can be positive, negative, or zero.
+
+2. Approach
+a. The key idea is that negative numbers can turn a very small (large negative) product into a very large positive product when multiplied.
+b. Therefore, we need to track not only the maximum product ending at the current position but also the minimum product ending at the current position.
+c. When iterating through the array, at each number, we consider three possibilities for the new maximum and minimum products: the number itself, the number multiplied by the previous maximum product, and the number multiplied by the previous minimum product.
+d. Zeroes reset the product sequence, as any product involving zero becomes zero.
+
+3. Algorithm Steps
+a. Initialize `cur_max` and `cur_min` to 1. These variables will store the maximum and minimum product ending at the previous array position.
+b. Initialize `ans` (the overall maximum product found so far) to `INT_MIN`.
+c. First, iterate through the input array `nums` to find the largest single element. Update `ans` with this value. This ensures that cases where all products are negative or zero, and the maximum product is a single number, are handled correctly.
+d. Begin a second iteration through the array `nums` using an index `i` from 0 to `nums.size()-1`. Let `n` be `nums[i]`.
+e. If `n` is 0, it means any product sequence ending here is broken. Reset `cur_max` and `cur_min` back to 1 and continue to the next number.
+f. Store the potential new maximum and minimum products: `temp1 = n * cur_max` and `temp2 = n * cur_min`. This step is crucial because `cur_max` will be updated first and that new value shouldn't affect the calculation for `n * cur_min`.
+g. Update `cur_max`: it becomes the maximum of `n`, `temp1`, and `temp2`.
+h. Update `cur_min`: it becomes the minimum of `n`, `temp1`, and `temp2`.
+i. Update the overall `ans` by comparing it with the current `cur_max`.
+j. After iterating through all numbers, return `ans`.
+
+4. Time Complexity
+O(N)
+
+5. Space Complexity
+O(1)
