@@ -1,0 +1,27 @@
+11. Container_With_Most_Water
+Difficulty: Medium
+Here's an explanation of the provided C++ solution:
+
+### 1. Problem Understanding
+The goal is to find the maximum amount of water that can be contained between any two vertical lines. We're given an array of numbers representing the heights of these lines. The container's base is formed by the x-axis, and its height is limited by the shorter of the two chosen lines.
+
+### 2. Approach
+The solution uses a "two-pointer" strategy. It starts with one pointer at the leftmost line and another at the rightmost line. It calculates the area these two lines can contain. To potentially find a larger area, it then moves one of the pointers inwards. The crucial insight is to always move the pointer that points to the *shorter* line. This is because moving the shorter line offers the possibility of encountering a taller line that could increase the container's height, even though the width is decreasing. If we were to move the taller line, the maximum height would still be limited by the remaining shorter line, and the width would also decrease, making it less likely to find a larger area. By moving the shorter pointer, we're trying to eliminate a height constraint in the hope of finding a better one. The `long long` type is used for area calculations to prevent potential integer overflow, as the area can be quite large.
+
+### 3. Algorithm Steps
+*   Initialize a left pointer (`lp`) at the beginning of the `height` array and a right pointer (`rp`) at the end.
+*   Initialize `maxWater` to zero to keep track of the largest area found so far.
+*   Loop as long as the left pointer is to the left of the right pointer:
+    *   Calculate the `width` between the current `lp` and `rp`.
+    *   Determine the effective `ht` of the container, which is the minimum of the heights at `lp` and `rp`.
+    *   Calculate the `currWater` (current area) as `width * ht`.
+    *   Update `maxWater` if `currWater` is greater than the current `maxWater`.
+    *   If the height at `lp` is less than the height at `rp`, increment `lp` (move it one step to the right).
+    *   Otherwise (if the height at `lp` is greater than or equal to the height at `rp`), decrement `rp` (move it one step to the left).
+*   Once the pointers cross or meet, the loop ends, and the final `maxWater` is returned.
+
+### 4. Time Complexity
+O(N). The two pointers start at opposite ends of the array and move towards each other, iterating through the array at most once. Each step within the loop takes constant time.
+
+### 5. Space Complexity
+O(1). Only a few constant extra variables (`lp`, `rp`, `maxWater`, `width`, `ht`, `currWater`) are used, regardless of the size of the input `height` array.
