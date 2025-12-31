@@ -1,0 +1,47 @@
+11. Container_With_Most_Water
+Difficulty: Medium
+Alright, let's walk through this solution.
+
+---
+
+### 1. Problem Understanding
+
+We need to find the maximum amount of water that can be contained between two vertical lines drawn on a plane. Each line is defined by its height, given in an array. The container formed by two lines will have a base equal to the distance between them, and its height will be limited by the *shorter* of the two lines. Our goal is to select two lines that will maximize this volume of water.
+
+### 2. Approach
+
+The approach used here is a "two-pointer" technique. We start with the widest possible container, using the lines at the far ends of the array. This gives us the maximum possible width. From this starting point, we iteratively try to find a better container.
+
+The core idea is that to potentially find a *larger* area, even if the width is decreasing (which it will be as we move pointers inward), we must try to increase the *height* of the container. If we have two lines, the water level is limited by the shorter one. If we move the *taller* line inward, we definitely decrease the width, and the new limiting height will be at best the same, or more likely shorter (because we're replacing a tall line with an unknown, potentially shorter, line, while the existing shorter line remains the limit or becomes shorter itself). This means the area is guaranteed to decrease or stay the same.
+
+However, if we move the *shorter* line inward, while the width still decreases, there's a chance we might encounter a *taller* line that can act as a new, higher limit, potentially compensating for the reduced width and leading to a larger total area. By consistently moving the shorter pointer, we maximize our chance of finding a container with a greater effective height.
+
+### 3. Algorithm Steps
+
+1.  **Initialize Pointers and Max Water**:
+    *   Set a `lp` (left pointer) to the very first line (index 0).
+    *   Set a `rp` (right pointer) to the very last line (index `height.size() - 1`).
+    *   Initialize `maxWater` to 0 (using `long long` to prevent potential overflow for very large areas).
+2.  **Iterate and Calculate Area**:
+    *   Continue a loop as long as `lp` is less than `rp` (meaning we still have a valid container).
+    *   Calculate the current `width` of the container (`rp - lp`).
+    *   Determine the effective `ht` (height) of the container, which is the minimum of the heights at `height[lp]` and `height[rp]`.
+    *   Calculate `currWater` by multiplying `width` and `ht` (casting to `long long` for the calculation).
+    *   Update `maxWater` if `currWater` is greater than the current `maxWater`.
+3.  **Move Pointers**:
+    *   If the height at `lp` is less than the height at `rp`, increment `lp` (move the left pointer inward).
+    *   Otherwise (if height at `rp` is less than or equal to height at `lp`), decrement `rp` (move the right pointer inward).
+4.  **Return Result**:
+    *   Once the loop finishes (when `lp` meets or crosses `rp`), return the final `maxWater` (casting it back to `int` if necessary, assuming the final result fits within an `int`).
+
+### 4. Time Complexity
+
+**O(N)**
+
+The two pointers start at opposite ends and move towards each other, traversing the array only once. In each step, they either meet or one pointer moves, ensuring the loop runs at most `N` times, where `N` is the number of lines.
+
+### 5. Space Complexity
+
+**O(1)**
+
+The solution uses a fixed amount of extra space for variables like `lp`, `rp`, `maxWater`, `width`, `ht`, and `currWater`, regardless of the input array size.
