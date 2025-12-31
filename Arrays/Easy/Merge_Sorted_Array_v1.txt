@@ -1,0 +1,68 @@
+88. Merge_Sorted_Array
+Difficulty: Easy
+Hey there! Let's break down this C++ code for merging two sorted lists. It's a pretty common problem in programming, and this solution uses a really neat trick.
+
+---
+
+### 1. Problem Understanding
+
+Imagine you have two separate shopping lists of items, and both lists are already sorted alphabetically (or by price, etc.).
+
+*   **List 1 (`nums1`):** This list has some items in it, and then a bunch of empty slots (we can think of them as `0`s, but they just represent space). Crucially, this list is big enough to hold *all* the items from both lists combined. The items it *does* have are already sorted among themselves.
+*   **List 2 (`nums2`):** This list just has its items, and they are also sorted among themselves.
+
+Your goal is to take all the items from `nums2` and put them into `nums1`, filling up those empty slots, such that `nums1` ends up containing *all* the items from both original lists, and the *entire* `nums1` is sorted.
+
+So, you start with `nums1` having `m` actual items and `n` empty slots, and `nums2` having `n` actual items. You need `nums1` to end up with `m+n` sorted items.
+
+---
+
+### 2. Approach
+
+Okay, so how do we combine them without making a mess?
+
+The simplest thought might be to start from the beginning of both lists and just put the smallest item first, then the next smallest, and so on. But there's a problem: `nums1` already has its `m` items at the beginning. If we start putting items from `nums2` at the beginning of `nums1`, we might accidentally overwrite an item in `nums1` that we still needed to compare!
+
+Instead, this solution uses a super clever approach: **merge from the back!**
+
+Think about it: the `n` empty slots in `nums1` are at the *end*. If we figure out what the *largest* combined item should be, we can place it in the very last empty slot of `nums1`. Then, we figure out the second largest, and place it in the second to last slot, and so on.
+
+This way, we're always writing into an empty slot and never overwriting any of the `m` important items in `nums1` before we've had a chance to look at them. We just compare the *largest remaining* item from `nums1` (its `m` part) and the *largest remaining* item from `nums2`, pick the bigger one, and put it at the current "end" of `nums1`.
+
+---
+
+### 3. Algorithm Steps
+
+Let's walk through how the code does this, step-by-step:
+
+1.  **Find the last spot:** We figure out where the *very last* item in the final, merged list will go. This is basically the very end of `nums1` (index `m+n-1`). We use a variable `k` to keep track of this "write position."
+2.  **Pointers to ends:** We also need to keep track of the *last item* in the meaningful part of `nums1` (using `m` as an index pointer, `m-1`) and the *last item* in `nums2` (using `n` as an index pointer, `n-1`).
+3.  **Loop from the back:** We start a loop that keeps going as long as `k` (our write position) is valid and we still have numbers to place (`k > 0`).
+4.  **`nums2` is empty?** If we've already placed all the numbers from `nums2` (`n` becomes 0), it means any remaining numbers we need to sort are already in `nums1`'s original part. Since we're merging from the back, these numbers are already in their correct relative positions. So, we just decrement `k` (move to the next slot in `nums1` to the left) and continue, essentially doing nothing because those numbers are already in place.
+5.  **`nums1` (original part) is empty?** If we've already placed all the *original* numbers from `nums1` (`m` becomes 0), it means any remaining numbers *must* come from `nums2`. So, we take the current largest remaining number from `nums2` (`nums2[n-1]`), put it into `nums1` at our current write position (`nums1[k-1]`), and then move `k` back and `n` back.
+6.  **Compare and place:** If *both* `nums1` (its original part) and `nums2` still have numbers to consider:
+    *   We look at the last remaining number in `nums1` (`nums1[m-1]`) and the last remaining number in `nums2` (`nums2[n-1]`).
+    *   Whichever of these two numbers is larger (or if they are equal, it doesn't matter which one we pick first, but the code picks from `nums1` if equal), we decide that's the number that should go into the current "last available slot" in `nums1` (`nums1[k-1]`).
+    *   We then copy that number into `nums1[k-1]`.
+    *   Finally, we move our write position `k` one step to the left, and also move the pointer (either `m` or `n`) of the list we just took a number from, one step to the left.
+7.  **Repeat:** We keep repeating steps 4-6 until `k` reaches 0, meaning all `m+n` numbers have been placed correctly in `nums1`.
+
+---
+
+### 4. Time Complexity
+
+Think about how many times we actually touch a number. We essentially look at each of the `m` numbers from `nums1` and each of the `n` numbers from `nums2` exactly once (in reverse order). In each step of the loop, we place one number.
+
+So, the total number of operations is directly proportional to the total number of elements `m+n`. This makes it very efficient!
+
+---
+
+### 5. Space Complexity
+
+Did we use any extra lists or arrays to help us out? No, we didn't! We just used a few simple variables (`k`, `m`, `n`) to keep track of our positions. These variables take up a tiny, fixed amount of memory, no matter how large `nums1` or `nums2` are.
+
+So, we say it uses a minimal, constant amount of extra memory. Very good!
+
+---
+
+Hope that makes sense! It's a classic problem and this "merge from the back" trick is super useful to know.
