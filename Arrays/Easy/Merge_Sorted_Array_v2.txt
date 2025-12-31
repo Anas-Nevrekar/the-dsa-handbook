@@ -1,0 +1,35 @@
+88. Merge_Sorted_Array
+Difficulty: Easy
+Problem Understanding
+Imagine you have two lists of numbers. Let's call them "list one" and "list two".
+Both lists are already sorted, which means the numbers go from smallest to biggest, like 1, 2, 3.
+List one has some real numbers, and then some empty spots at the end. These empty spots are just waiting for new numbers.
+List two has its own numbers, also sorted.
+Your job is to take all the numbers from list two and put them into the empty spots of list one.
+When you are done, list one should have all the numbers from both lists, and they must still be sorted from smallest to biggest.
+
+Approach
+The trick is to start from the very end of the lists.
+Imagine you have three markers. One marker points to the last real number in "list one". Another marker points to the last number in "list two". The third marker points to the very last empty spot in "list one" where we want to put a new number.
+We look at the numbers where our first two markers are pointing. We pick the bigger one.
+Then, we take that bigger number and place it where our third marker is pointing in "list one".
+After we put a number, we move the marker that gave us the number one step back. And we also move the third marker one step back, because that spot is now full.
+We keep doing this, always picking the bigger number and placing it in the next empty spot from the end, until all numbers from "list two" are inside "list one". This works because we always pick the biggest available number and put it in the biggest available spot, so the list stays sorted.
+
+Algorithm Steps
+1.  We get ready by finding the very last spot in "list one" where a number can go. Let's call this the "merge spot".
+2.  We also have a "finger" pointing to the last real number in "list one" and another "finger" pointing to the last number in "list two".
+3.  Now, we keep working until all numbers are placed into "list one".
+    a.  If we've already used up all the numbers from "list two", it means any remaining numbers must come from "list one". Since they are already in "list one" and in the right place relative to each other, we just tell our "merge spot" to move back, meaning it's ready for the next number (which is already there).
+    b.  If we've already used up all the original numbers from "list one", it means the numbers we need to place now must come from "list two". So, we take the last number from "list two" and put it into our "merge spot" in "list one". Then, we move our "merge spot" back, and also our "list two" finger back.
+    c.  If both "list one" (its original numbers) and "list two" still have numbers to look at, we need to decide which one to pick.
+        We look at the number our "list one" finger points to and the number our "list two" finger points to.
+        If the "list one" number is bigger (or the same size), we pick it. We put this number into our "merge spot" in "list one". Then we move our "merge spot" back, and our "list one" finger back.
+        If the "list two" number is bigger, we pick it. We put this number into our "list one" at the "merge spot". Then we move our "merge spot" back, and our "list two" finger back.
+4.  We repeat these steps until our "merge spot" has moved all the way to the beginning of the list, meaning all numbers are now in "list one" and perfectly sorted!
+
+Time Complexity
+O(m+n)
+
+Space Complexity
+O(1)
