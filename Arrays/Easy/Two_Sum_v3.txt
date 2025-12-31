@@ -1,0 +1,35 @@
+1. Two_Sum
+Difficulty: Easy
+1. Problem Understanding
+a. You are given a list of integers (an array).
+b. You are also given a target integer.
+c. Your task is to find two numbers within the list that add up exactly to the target.
+d. You need to return the indices (positions) of these two numbers in the original list.
+e. It is guaranteed that there will be exactly one valid pair of numbers for each test case.
+f. You cannot use the same number twice.
+
+2. Approach
+a. The solution uses a hash map (an unordered_map in C++) to efficiently store and look up numbers.
+b. It iterates through the list of numbers only once.
+c. For each number it encounters, it determines what "complementary" number is needed to reach the target sum.
+d. It then checks if this complementary number has already been seen and stored in the hash map.
+e. If the complementary number is found, it means the current number and the stored number form the desired pair.
+f. If not found, the current number and its index are added to the hash map for potential future matches.
+
+3. Algorithm Steps
+a. Initialize an empty hash map where keys will be numbers from the input list and values will be their corresponding indices.
+b. Loop through the input list of numbers from the beginning to the end, keeping track of the current number and its index (let's say `i`).
+c. For each number `nums[i]`, calculate the `diff` (difference) needed to reach the target: `diff = target - nums[i]`.
+d. Check if this `diff` (the complementary number) already exists as a key in the hash map.
+e. If `diff` is found in the hash map:
+    i. This means you have found the two numbers that sum up to the target.
+    ii. Return a list containing two indices: the index associated with `diff` (retrieved from the map) and the current index `i`.
+f. If `diff` is not found in the hash map:
+    i. Add the current number `nums[i]` as a key and its index `i` as the value into the hash map.
+g. Continue the loop until a pair is found. (The problem guarantees a solution, so the loop will always find a pair before finishing).
+
+4. Time Complexity
+O(N)
+
+5. Space Complexity
+O(N)
