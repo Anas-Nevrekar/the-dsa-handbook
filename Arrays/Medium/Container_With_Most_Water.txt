@@ -1,0 +1,27 @@
+11. Container_With_Most_Water
+Difficulty: Medium
+Here's an explanation of the C++ solution:
+
+### 1. Problem Understanding
+We're given a series of vertical lines, represented by their heights. We need to find two lines among them that, together with the x-axis, would form a container capable of holding the maximum possible amount of water. The container can't be tilted, so its height is limited by the shorter of the two chosen lines, and its width is the distance between those two lines.
+
+### 2. Approach
+The solution uses a "two-pointer" strategy. We start with two pointers, one at the leftmost line and one at the rightmost line. This gives us the widest possible container initially. We then calculate how much water this container can hold. The key idea is that to potentially find a larger area, we must try to increase the container's height, as the width can only decrease when we move the pointers inward. The height is limited by the shorter of the two lines. So, it makes sense to always move the pointer associated with the *shorter* line inward. This is because moving the taller line inward would guarantee a decrease in width, without necessarily increasing the height (since the height is still capped by the original shorter line). By moving the shorter line's pointer, we're hoping to find a taller line that could potentially increase the container's overall height, thus leading to a larger area despite the reduced width.
+
+### 3. Algorithm Steps
+*   Initialize a `left` pointer to the first line and a `right` pointer to the last line.
+*   Initialize a `maxWater` variable to keep track of the largest area found.
+*   While the `left` pointer is to the left of the `right` pointer:
+    *   Calculate the `currentHeight` as the minimum of the heights at `left` and `right`.
+    *   Calculate the `currentWidth` as the distance between `right` and `left`.
+    *   Calculate the `currentWater` by multiplying `currentHeight` and `currentWidth`.
+    *   Update `maxWater` if `currentWater` is greater than the current `maxWater`.
+    *   If the line at `left` is shorter than the line at `right`, increment `left`.
+    *   Otherwise (if the line at `right` is shorter or equal), decrement `right`.
+*   Return the final `maxWater` value.
+
+### 4. Time Complexity
+O(N). The two pointers start at opposite ends and move towards each other, traversing the array elements at most once. Each step takes constant time.
+
+### 5. Space Complexity
+O(1). We are only using a few constant extra variables for pointers and storing the maximum water found, regardless of the input size.
