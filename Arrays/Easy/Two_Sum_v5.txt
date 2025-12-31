@@ -1,0 +1,31 @@
+1. Two_Sum
+Difficulty: Easy
+1. Problem Understanding
+a. The goal is to find two numbers within a given list of integers that add up to a specific target number.
+b. The solution should return the original positions (indices) of these two numbers.
+c. It is guaranteed that there will be exactly one solution, and the same number cannot be used twice.
+
+2. Approach
+a. The solution uses a hash map to efficiently keep track of numbers seen so far and their corresponding indices.
+b. As it goes through each number in the list, it calculates what 'complement' number is needed to reach the target.
+c. It then checks if this 'complement' has already been stored in the hash map.
+d. If the 'complement' is found, it means the required pair has been identified.
+e. If not, the current number and its index are added to the hash map for future checks.
+
+3. Algorithm Steps
+a. Create an empty hash map to store numbers and their indices.
+b. Loop through the input list of numbers, keeping track of the current index.
+c. For each number in the list, calculate the 'difference' needed by subtracting the current number from the 'target'.
+d. Check if this calculated 'difference' exists as a key in the hash map.
+e. If the 'difference' is found in the map:
+    1. This means the two numbers that sum up to the 'target' have been found.
+    2. Return a list containing the index associated with the 'difference' from the map, and the current index.
+f. If the 'difference' is not found in the map:
+    1. Add the current number as a key and its index as the value to the hash map.
+g. If the loop completes without finding a pair (this situation should not occur based on problem constraints), return an empty list.
+
+4. Time Complexity
+O(N)
+
+5. Space Complexity
+O(N)
