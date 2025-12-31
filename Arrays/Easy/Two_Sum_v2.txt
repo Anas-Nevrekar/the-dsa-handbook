@@ -1,0 +1,22 @@
+1. Two_Sum
+Difficulty: Easy
+1. Problem Understanding
+The problem asks us to find two different numbers in a given list of integers that add up to a specific target number. We need to return the indices (positions) of these two numbers.
+
+2. Approach
+The solution uses a hash map (an unordered_map in C++) to store numbers and their corresponding indices as it goes through the input list. For each number, it calculates the "complement" needed to reach the target. It then quickly checks if this complement has already been seen and stored in the map. If the complement is found, a pair is identified. If not, the current number and its index are added to the map for future checks. This approach works efficiently because checking for the existence of an item in a hash map is very fast.
+
+3. Algorithm Steps
+a. Create an empty hash map where keys will be numbers from the list and values will be their indices.
+b. Iterate through the input list of numbers, keeping track of each number's current index.
+c. For the current number, calculate the 'difference' by subtracting it from the 'target' (target - current_number). This 'difference' is the value of the other number we are looking for.
+d. Check if this 'difference' already exists as a key in the hash map.
+e. If the 'difference' is found in the map, it means we have found the two numbers that sum to the target. Return the index stored in the map for the 'difference' and the current number's index.
+f. If the 'difference' is not found in the map, add the current number as a key and its index as the value into the hash map.
+g. If the loop completes without finding a pair (which typically implies no solution exists, though problem constraints usually guarantee one), return an empty result.
+
+4. Time Complexity
+O(n)
+
+5. Space Complexity
+O(n)
