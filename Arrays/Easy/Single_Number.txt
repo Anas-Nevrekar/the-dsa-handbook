@@ -1,0 +1,26 @@
+136. Single_Number
+Difficulty: Easy
+Here's an explanation of the C++ solution:
+
+### 1. Problem Understanding
+The goal is to identify a single unique number within a list of integers. Every other number in this list appears exactly two times.
+
+### 2. Approach
+The solution cleverly uses the bitwise XOR operation. The core idea relies on two properties of XOR:
+1.  XORing any number with 0 gives the number itself (e.g., `5 ^ 0 = 5`).
+2.  XORing a number with itself results in 0 (e.g., `5 ^ 5 = 0`).
+Because XOR is also commutative and associative (meaning the order of operations doesn't change the result), we can XOR all the numbers in the list together. All numbers that appear twice will effectively cancel each other out (as `A ^ A` becomes `0`), leaving only the single number that appeared once.
+
+### 3. Algorithm Steps
+*   Start with an integer variable initialized to 0; this variable will accumulate the XOR sum.
+*   Loop through each number in the provided list.
+*   For each number, perform a bitwise XOR operation between the current accumulated sum and the number, updating the sum.
+*   Once all numbers in the list have been processed, the final value in the sum variable will be the unique number.
+
+### 4. Time Complexity
+O(N), where N is the number of elements in the input list.
+Justification: The code iterates through the input list exactly once to perform constant-time XOR operations for each element.
+
+### 5. Space Complexity
+O(1)
+Justification: The solution uses only a single auxiliary variable to store the XOR sum, independent of the input list's size.
