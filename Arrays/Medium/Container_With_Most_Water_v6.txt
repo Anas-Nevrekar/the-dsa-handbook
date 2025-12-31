@@ -1,0 +1,28 @@
+11. Container_With_Most_Water
+Difficulty: Medium
+Here's an explanation of the C++ solution for finding the container with the most water.
+
+### 1. Problem Understanding
+The goal is to find two vertical lines from a given set of line heights that, together with the x-axis, form a container capable of holding the maximum amount of water. The height of the water in a container is limited by the shorter of the two lines, and the width is the distance between them. We need to maximize the area (width * height).
+
+### 2. Approach
+The solution uses a two-pointer technique. We start with two pointers, one at the leftmost line and one at the rightmost line. This gives us the maximum possible width initially. We calculate the area formed by these two lines. The key idea is to intelligently move one of the pointers inward. Since the current water level is limited by the *shorter* of the two lines, moving the pointer associated with the shorter line inwards gives us the *potential* to find a taller line that could increase the container's height, even though we are reducing the width. Moving the pointer associated with the taller line inward would only reduce the width and the height would still be limited by the *original shorter* line (or potentially an even shorter new line), thus guaranteeing a reduction or no improvement in area. By always moving the shorter line's pointer, we maximize our chances of finding a larger area.
+
+### 3. Algorithm Steps
+*   Initialize a `left pointer (lp)` to the beginning of the `height` array and a `right pointer (rp)` to its end.
+*   Initialize `maxWater` to zero to keep track of the largest area found so far.
+*   While the `left pointer` is to the left of the `right pointer`:
+    *   Calculate the current `width` as the difference between `rp` and `lp`.
+    *   Determine the effective `height (ht)` of the container, which is the minimum of `height[lp]` and `height[rp]`.
+    *   Calculate the `currWater` (current area) by multiplying `width` and `ht`.
+    *   Update `maxWater` if `currWater` is greater than the current `maxWater`.
+    *   If `height[lp]` is less than `height[rp]`, increment `lp` (move the left pointer right).
+    *   Otherwise (if `height[rp]` is less than or equal to `height[lp]`), decrement `rp` (move the right pointer left).
+*   Once `lp` meets or crosses `rp`, the loop terminates.
+*   Return the final `maxWater` value.
+
+### 4. Time Complexity
+The time complexity is O(N), where N is the number of lines. This is because the two pointers traverse the array from opposite ends, making at most N steps in total, and each step involves constant time operations.
+
+### 5. Space Complexity
+The space complexity is O(1). The solution uses only a few variables to store pointers, current area, and max area, regardless of the input array size. No additional data structures that scale with input size are used.
