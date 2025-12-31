@@ -1,0 +1,33 @@
+1. Two_Sum
+Difficulty: Easy
+1. Problem Understanding
+a. You are given a list of whole numbers (integers) called 'nums'.
+b. You are also given a target whole number.
+c. The goal is to find two different numbers within the 'nums' list that add up exactly to the 'target'.
+d. You need to return the positions (indices) of these two numbers from the original list.
+
+2. Approach
+a. The solution uses a hash map (unordered_map in C++) to efficiently store numbers we have already seen and their corresponding indices.
+b. It iterates through the list of numbers one by one.
+c. For each number, it calculates what the "other number" (complement) would need to be to reach the 'target'.
+d. It then checks if this required "complement" number has already been stored in the hash map.
+e. If the complement is found, it means we have identified the two numbers, and their indices can be retrieved. If not, the current number is added to the map for future checks.
+
+3. Algorithm Steps
+a. Initialize an empty hash map where keys will be numbers and values will be their indices.
+b. Loop through each number in the input list 'nums' using an index 'i', starting from the first number.
+c. For each number 'nums[i]', calculate the 'difference' needed: `difference = target - nums[i]`.
+d. Check if this 'difference' already exists as a key in the hash map.
+e. If the 'difference' is found in the map:
+    i. This means we have found the two numbers that sum up to the target.
+    ii. The indices are `map[difference]` (the index of the complement) and the current index 'i'.
+    iii. Return these two indices immediately.
+f. If the 'difference' is not found in the map:
+    i. Add the current number 'nums[i]' as a key and its index 'i' as the value to the hash map. This makes it available for future comparisons.
+g. If the loop finishes (which implies a solution was not found, though the problem guarantees one exists), an empty list is returned.
+
+4. Time Complexity
+O(N)
+
+5. Space Complexity
+O(N)
