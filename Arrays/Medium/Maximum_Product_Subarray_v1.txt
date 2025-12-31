@@ -1,0 +1,32 @@
+152. Maximum_Product_Subarray
+Difficulty: Medium
+Problem Understanding
+a. The goal is to find a contiguous subarray within a given array of numbers.
+b. The product of all numbers within this specific subarray must be the largest possible.
+c. The subarray must contain at least one number.
+
+Approach
+a. The solution iterates through the array, keeping track of the maximum and minimum product of any subarray ending at the current position.
+b. It is crucial to track both maximum and minimum products because a negative number multiplied by another negative number can turn a small minimum into a large maximum.
+c. When a positive number is encountered, it extends the current maximum and minimum products naturally.
+d. When a negative number is encountered, it swaps the roles of the maximum and minimum products: multiplying a negative number by the current maximum might yield a new minimum, while multiplying it by the current minimum might yield a new maximum.
+e. If a zero is encountered, it resets the current maximum and minimum products to 1, effectively starting a new subarray product calculation, as zero makes any product zero.
+f. A global variable maintains the overall maximum product found across all subarrays processed so far.
+
+Algorithm Steps
+a. Initialize `cur_max` and `cur_min` to 1, representing the product of an empty subarray.
+b. Initialize a global maximum product variable `ans` to the smallest possible integer value (`INT_MIN`).
+c. Iterate through the input array once to initially update `ans` with the maximum of `ans` and each individual number. This handles cases where the maximum product is a single element, including zero.
+d. Begin a second iteration through each number `n` in the input array.
+e. If `n` is 0, reset both `cur_max` and `cur_min` to 1. Then skip to the next number.
+f. Store the values of `n * cur_max` and `n * cur_min` in temporary variables before updating `cur_max` and `cur_min`. This is because `cur_max` and `cur_min` will be updated based on their previous values.
+g. Update `cur_max` to be the maximum among three values: `n` itself, the product of `n` and the previous `cur_max`, and the product of `n` and the previous `cur_min`.
+h. Update `cur_min` to be the minimum among three values: `n` itself, the product of `n` and the previous `cur_max`, and the product of `n` and the previous `cur_min`.
+i. Update the global `ans` by taking the maximum between the current `ans` and the newly calculated `cur_max`.
+j. After the loop finishes, `ans` will hold the maximum product subarray.
+
+Time Complexity
+O(N)
+
+Space Complexity
+O(1)
