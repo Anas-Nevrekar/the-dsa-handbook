@@ -1,0 +1,23 @@
+1. Two_Sum
+Difficulty: Easy
+Here's an explanation of the C++ solution:
+
+### 1. Problem Understanding
+The task is to find two numbers within a given list that sum up to a specific `target` value. Once found, we need to return the original positions (indices) of these two numbers from the list.
+
+### 2. Approach
+The solution uses a hash map to efficiently keep track of numbers we've seen so far and their indices. For each number we encounter, we calculate what its "complement" would need to be to reach the `target`. We then check if this complement has already been stored in our map. If it has, we've found our pair. If not, we add the current number and its index to the map for future checks. This avoids repeatedly searching the rest of the list.
+
+### 3. Algorithm Steps
+*   Create an empty hash map to store numbers and their indices as we iterate.
+*   Loop through each number in the input list, keeping track of its current index `i`.
+*   For each `nums[i]`, calculate the `diff` (the complement needed): `target - nums[i]`.
+*   Check if this `diff` already exists as a key in our hash map.
+    *   If `diff` is found in the map, it means we've previously encountered the number that, when added to `nums[i]`, equals `target`. We then return the index stored with `diff` from the map and the current index `i`.
+    *   If `diff` is not found, add the current number `nums[i]` and its index `i` to the hash map. This way, future numbers can check if `nums[i]` is *their* complement.
+
+### 4. Time Complexity
+O(N). We iterate through the input array once. Each operation with the hash map (insertion and lookup) takes, on average, constant time.
+
+### 5. Space Complexity
+O(N). In the worst-case scenario, we might have to store all numbers from the input list into the hash map if no pair is found until the very end, or if no pair exists.
