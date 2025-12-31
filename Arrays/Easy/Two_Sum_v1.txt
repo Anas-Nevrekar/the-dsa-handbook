@@ -1,0 +1,41 @@
+1. Two_Sum
+Difficulty: Easy
+1. Problem Understanding
+
+Imagine you have a list of numbers, like prices for different toys: 2, 7, 11, 15.
+And you have a special amount of money you want to spend, let's say 9 dollars.
+Your job is to find two of those toy prices from your list that, when you add them together, make exactly 9 dollars.
+Then, you need to tell me *where* those two toy prices were in the list. Like, "the first toy and the second toy!"
+
+2. Approach
+
+Think about it like this: You have a big pile of colorful building blocks, and each block has a number on it.
+You also have a target number you want to build by adding two blocks together.
+Instead of trying every single pair of blocks (which would take a super long time!), we can be smart.
+We can pick one block. Let's say it has a '2' on it.
+Then, we think, "What number do I need *with* this '2' to make my target number, say '9'?" The answer is '7'.
+Now, we quickly check if we've *already seen* a block with a '7' on it.
+To do this super fast, we can have a special magic box. When we see a block, we put it in the box and remember where we found it. So when we need to find a '7', we just peek into our magic box!
+
+3. Algorithm Steps
+
+Okay, let's play with our magic box and numbers.
+1. First, we get our magic box ready. It's empty right now.
+2. We start looking at the numbers in our list, one by one.
+3. Let's say the first number we see is '2'.
+4. We think: "My target is '9'. If I have '2', what number do I still need?" We figure out we need '7'.
+5. Now, we quickly open our magic box and ask, "Hey magic box, have you seen a '7' before?"
+6. The magic box says, "Nope, not yet!"
+7. So, we tell the magic box: "Okay, remember this '2' and remember that I found it at the very first spot!" We put '2' into the box with its spot number.
+8. Now, we move to the next number in our list. Let's say it's '7'.
+9. We think again: "My target is '9'. If I have '7', what number do I still need?" We figure out we need '2'.
+10. We quickly open our magic box again and ask, "Hey magic box, have you seen a '2' before?"
+11. This time, the magic box says, "Yes! I saw a '2' at the very first spot!"
+12. Wow! We found our two numbers! We know the current number '7' is at the second spot, and the magic box told us '2' was at the first spot. So we shout out "The first spot and the second spot!"
+13. That's it! We found them! We don't need to look at any more numbers.
+
+4. Time Complexity
+O(n)
+
+5. Space Complexity
+O(n)
